@@ -48,7 +48,7 @@
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="New Item" id="grl-6B-5qw">
-                        <barButtonItem key="leftBarButtonItem" style="plain" systemItem="cancel" id="lfv-9P-VZX">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="lfv-9P-VZX">
                             <connections>
                                 <action selector="cancel:" destination="BYZ-38-t0r" id="EF2-BE-pbY"/>
                             </connections>
@@ -98,6 +98,7 @@
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="nameLabel" destination="MiF-iO-IHl" id="eIa-Qe-niJ"/>
+                                    <segue destination="BYZ-38-t0r" kind="show" identifier="ShowDetail" id="EfA-bo-RaT"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -109,7 +110,7 @@
                     <navigationItem key="navigationItem" title="ToDo Items" id="0ii-Ym-EwY">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="9Gp-dP-W1O">
                             <connections>
-                                <segue destination="BYZ-38-t0r" kind="push" identifier="AddItem" id="3AG-Q8-HY0"/>
+                                <segue destination="BYZ-38-t0r" kind="show" identifier="AddItem" id="3AG-Q8-HY0"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -137,4 +138,7 @@
             <point key="canvasLocation" x="1076" y="387"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="3AG-Q8-HY0"/>
+    </inferredMetricsTieBreakers>
 </document>

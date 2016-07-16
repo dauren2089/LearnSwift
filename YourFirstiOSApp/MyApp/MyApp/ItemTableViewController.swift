@@ -25,10 +25,31 @@ class ItemTableViewController: UITableViewController {
         let srcViewCon = sender.sourceViewController as? ViewController
         let item = srcViewCon?.item
         if srcViewCon != nil && item?.name != "" {
-            // Add a new item
-            let newIndexPath = NSIndexPath(forRow: items.count, inSection: 0)
-            items.append(item!)
-            tableView.insertRowsAtIndexPaths([newIndexPath], withRowAnimation: .Bottom)
+            if let selectedIndexPath = tableView.indexPathForSelectedRow {
+                // Update an existing meal.
+                items[selectedIndexPath.row] = item!
+                tableView.reloadRowsAtIndexPaths([selectedIndexPath], withRowAnimation: .None)
+            } else {
+                // Add a new item
+                let newIndexPath = NSIndexPath(forRow: items.count, inSection: 0)
+                items.append(item!)
+                tableView.insertRowsAtIndexPaths([newIndexPath], withRowAnimation: .Bottom)
+            }
+        }
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "ShowDetail" {
+            let detailVC = segue.destinationViewController as! ViewController
+            
+            // Get the cell that generated this segue
+            if let selectedCell = sender as? ItemTableViewCell {
+                let indexPath = tableView.indexPathForCell(selectedCell)
+                let selectedItem = items[indexPath!.row]
+                detailVC.item = selectedItem
+            }
+        } else if segue.identifier == "AddItem" {
+            
         }
     }
     
