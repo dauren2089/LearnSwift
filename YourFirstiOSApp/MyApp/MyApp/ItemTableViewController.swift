@@ -19,6 +19,8 @@ class ItemTableViewController: UITableViewController {
         super.viewDidLoad()
         
         loadSampleItems()
+        
+        navigationItem.leftBarButtonItem = editButtonItem()
     }
     
     @IBAction func unwindToList(sender: UIStoryboardSegue) {
@@ -67,5 +69,14 @@ class ItemTableViewController: UITableViewController {
         cell.textLabel?.text = items[indexPath.row].name
         
         return cell
+    }
+    
+    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if editingStyle == .Delete {
+            items.removeAtIndex(indexPath.row)
+            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+        } else if editingStyle == .Insert {
+            
+        }
     }
 }
