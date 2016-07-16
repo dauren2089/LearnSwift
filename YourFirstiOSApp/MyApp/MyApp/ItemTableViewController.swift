@@ -11,14 +11,23 @@ import UIKit
 class ItemTableViewController: UITableViewController {
     var items = [Item]()
     
-    func loadSampleItems() {
-        items += [Item(name: "Item1"), Item(name: "Item2"), Item(name: "Item3")]
+    func loadItems() -> [Item]? {
+        return NSKeyedUnarchiver.unarchiveObjectWithFile(Item.ArchiveURL.path!) as? [Item]
+    }
+    
+    func saveItems() {
+        let isSaved = NSKeyedArchiver.archiveRootObject(items, toFile: Item.ArchiveURL.path!)
+        if !isSaved {
+            print("Failed to save items...")
+        }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        loadSampleItems()
+        if let savedItems = loadItems() {
+            items += savedItems
+        }
         
         navigationItem.leftBarButtonItem = editButtonItem()
     }
@@ -38,6 +47,8 @@ class ItemTableViewController: UITableViewController {
                 tableView.insertRowsAtIndexPaths([newIndexPath], withRowAnimation: .Bottom)
             }
         }
+        
+        saveItems()
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -75,6 +86,7 @@ class ItemTableViewController: UITableViewController {
         if editingStyle == .Delete {
             items.removeAtIndex(indexPath.row)
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+            saveItems()
         } else if editingStyle == .Insert {
             
         }
