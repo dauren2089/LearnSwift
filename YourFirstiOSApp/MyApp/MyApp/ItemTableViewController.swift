@@ -21,6 +21,17 @@ class ItemTableViewController: UITableViewController {
         loadSampleItems()
     }
     
+    @IBAction func unwindToList(sender: UIStoryboardSegue) {
+        let srcViewCon = sender.sourceViewController as? ViewController
+        let item = srcViewCon?.item
+        if srcViewCon != nil && item?.name != "" {
+            // Add a new item
+            let newIndexPath = NSIndexPath(forRow: items.count, inSection: 0)
+            items.append(item!)
+            tableView.insertRowsAtIndexPaths([newIndexPath], withRowAnimation: .Bottom)
+        }
+    }
+    
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
